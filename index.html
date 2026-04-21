@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moon Coffee — уютная кофейня</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #120c08;
+      color: #fff8ef;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(255, 191, 128, 0.18), transparent 35%),
+        linear-gradient(135deg, #120c08 0%, #2a1810 55%, #0f0906 100%);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(18, 12, 8, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      color: #d99b5f;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 15px;
+      color: #ead6c0;
+    }
+
+    .nav-links a:hover {
+      color: #ffc98b;
+    }
+
+    .hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 90px 22px 70px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 201, 139, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffd8aa;
+      font-size: 14px;
+    }
+
+    h1 {
+      max-width: 720px;
+      font-size: clamp(42px, 7vw, 76px);
+      line-height: 0.96;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      max-width: 560px;
+      color: #e7d1bd;
+      font-size: 18px;
+      margin-bottom: 32px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 13px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: #d99b5f;
+      color: #160d08;
+      box-shadow: 0 14px 30px rgba(217, 155, 95, 0.28);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #fff3e3;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .coffee-card {
+      position: relative;
+      min-height: 460px;
+      border-radius: 34px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.04)),
+        radial-gradient(circle at 50% 35%, #c9854e 0 18%, #63351f 19% 36%, #2a140c 37% 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.36);
+    }
+
+    .coffee-card::before {
+      content: "☕";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-size: 150px;
+      filter: drop-shadow(0 20px 28px rgba(0,0,0,0.35));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .coffee-card::after {
+      content: "свежая обжарка • десерты • завтраки";
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(18, 12, 8, 0.64);
+      color: #ffe3c3;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    section {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 72px 22px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.05;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .section-text {
+      max-width: 680px;
+      color: #e1c9b4;
+      margin-bottom: 34px;
+      font-size: 17px;
+    }
+
+    .features, .menu-grid, .reviews {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 24px;
+      border-radius: 26px;
+      background: rgba(255, 255, 255, 0.065);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #ffd09d;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: #dfc7b2;
+      font-size: 15px;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .menu-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: baseline;
+    }
+
+    .price {
+      color: #ffc98b;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .contact-box {
+      padding: 34px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, rgba(217,155,95,0.2), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      color: #e9d4bf;
+      margin-top: 18px;
+    }
+
+    .form {
+      display: grid;
+      gap: 12px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.08);
+      color: #fff8ef;
+      outline: none;
+      font: inherit;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #bfa995;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form button {
+      border: none;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    footer {
+      padding: 26px 22px 40px;
+      text-align: center;
+      color: #a9917e;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: #fff3e3;
+      color: #160d08;
+      font-weight: 700;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.25s ease;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.26);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .hero, .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .coffee-card {
+        min-height: 330px;
+      }
+
+      .features, .menu-grid, .reviews {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <nav class="nav">
+        <a class="logo" href="#">Moon<span>Coffee</span></a>
+        <div class="nav-links">
+          <a href="#about">О нас</a>
+          <a href="#menu">Меню</a>
+          <a href="#reviews">Отзывы</a>
+          <a href="#contacts">Контакты</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="badge">🌙 Открыты для тех, кто любит тишину и кофе</div>
+          <h1>Кофейня для мягких вечеров и бодрого утра</h1>
+          <p>
+            Moon Coffee — уютное место с ароматным кофе, домашними десертами
+            и спокойной атмосферой. Заходите за чашкой тепла, когда день был слишком длинным.
+          </p>
+          <div class="buttons">
+            <a class="btn btn-primary" href="#menu">Посмотреть меню</a>
+            <a class="btn btn-secondary" href="#contacts">Как нас найти</a>
+          </div>
+        </div>
+        <div class="coffee-card" aria-label="Иллюстрация чашки кофе"></div>
+      </section>
+
+      <section id="about">
+        <h2 class="section-title">Здесь пахнет кофе, корицей и спокойствием</h2>
+        <p class="section-text">
+          Мы придумали Moon Coffee как маленькое убежище в городе: место, где можно
+          перевести дыхание, поработать за ноутбуком, встретиться с подругой или просто
+          посидеть в тишине с любимым напитком.
+        </p>
+        <div class="features">
+          <article class="card">
+            <h3>☕ Свежий кофе</h3>
+            <p>Готовим эспрессо, фильтр, капучино, латте и авторские напитки на сезонных сиропах.</p>
+          </article>
+          <article class="card">
+            <h3>🥐 Десерты</h3>
+            <p>Каждый день — чизкейк, круассаны, брауни и нежные пирожные к кофе.</p>
+          </article>
+          <article class="card">
+            <h3>💻 Уют для работы</h3>
+            <p>Есть Wi‑Fi, розетки и спокойные места для учёбы, проектов и ночных идей.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="menu">
+        <h2 class="section-title">Меню</h2>
+        <p class="section-text">Небольшое тестовое меню. Цены и названия можно легко поменять прямо в коде.</p>
+        <div class="menu-grid">
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Капучино</h3>
+              <span class="price">220 ₽</span>
+            </div>
+            <p>Классический кофейный напиток с мягкой молочной пеной.</p>
+          </article>
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Лавандовый латте</h3>
+              <span class="price">290 ₽</span>
+            </div>
+            <p>Нежный латте с лёгкой цветочной ноткой и спокойным послевкусием.</p>
+          </article>
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Фильтр-кофе</h3>
+              <span class="price">180 ₽</span>
+            </div>
+            <p>Чистый вкус зерна для тех, кто любит кофе без лишнего.</p>
+          </article>
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Какао с маршмеллоу</h3>
+              <span class="price">240 ₽</span>
+            </div>
+            <p>Тёплый сладкий напиток для вечеров, когда хочется заботы.</p>
+          </article>
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Круассан</h3>
+              <span class="price">190 ₽</span>
+            </div>
+            <p>Хрустящий, сливочный, идеальный к утреннему кофе.</p>
+          </article>
+          <article class="card menu-item">
+            <div class="menu-top">
+              <h3>Чизкейк</h3>
+              <span class="price">260 ₽</span>
+            </div>
+            <p>Нежный десерт с ванильной основой и ягодным соусом.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="reviews">
+        <h2 class="section-title">Отзывы гостей</h2>
+        <p class="section-text">Для тестового сайта добавим несколько атмосферных отзывов.</p>
+        <div class="reviews">
+          <article class="card">
+            <h3>Алина</h3>
+            <p>«Очень уютно. Зашла после тяжёлого дня, взяла латте — и будто стало легче.»</p>
+          </article>
+          <article class="card">
+            <h3>Мария</h3>
+            <p>«Красивый интерьер, спокойная музыка и хороший кофе. Отлично для учёбы.»</p>
+          </article>
+          <article class="card">
+            <h3>Данил</h3>
+            <p>«Фильтр вкусный, десерты свежие. Теперь это моё место рядом с домом.»</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contacts">
+        <div class="contact">
+          <div class="contact-box">
+            <h2 class="section-title">Загляните на кофе</h2>
+            <p class="section-text">
+              Это тестовые контакты. Потом можно заменить адрес, телефон и ссылки на настоящие.
+            </p>
+            <div class="contact-list">
+              <p>📍 Москва, Лунный переулок, 7</p>
+              <p>🕘 Ежедневно: 08:00 — 22:00</p>
+              <p>📞 +7 900 000-00-00</p>
+              <p>📱 Telegram: @mooncoffee</p>
+            </div>
+          </div>
+
+          <div class="contact-box">
+            <h2 class="section-title">Быстрое сообщение</h2>
+            <form class="form" id="contactForm">
+              <input type="text" placeholder="Ваше имя" required />
+              <input type="tel" placeholder="Телефон" required />
+              <textarea placeholder="Ваше сообщение"></textarea>
+              <button class="btn btn-primary" type="submit">Отправить заявку</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>© 2026 Moon Coffee. Тестовый сайт кофейни для GitHub Pages.</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">Сообщение отправлено в тестовом режиме ☕</div>
+
+  <script>
+    // Плавная прокрутка по якорным ссылкам
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', function(event) {
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+
+        if (target) {
+          event.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Тестовая отправка формы без сервера
+    const form = document.getElementById('contactForm');
+    const toast = document.getElementById('toast');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      form.reset();
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2600);
+    });
+  </script>
+</body>
+</html>
